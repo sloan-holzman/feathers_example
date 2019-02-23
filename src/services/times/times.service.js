@@ -2,17 +2,14 @@
 const createService = require('feathers-mongoose');
 const createModel = require('../../models/times.model');
 const hooks = require('./times.hooks');
-const filters = require('./times.filters');
 
 module.exports = function () {
   const app = this;
   const Model = createModel(app);
-  const paginate = app.get('paginate');
 
   const options = {
     name: 'times',
-    Model,
-    paginate
+    Model
   };
 
   // Initialize our service with any options it requires
@@ -22,8 +19,4 @@ module.exports = function () {
   const service = app.service('times');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };

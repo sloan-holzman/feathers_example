@@ -1,17 +1,13 @@
 // Initializes the `search` service on path `/search`
-const createService = require('feathers-mongoose');
-const createModel = require('../../models/search.model');
+const createService = require('./search.class');
 const hooks = require('./search.hooks');
-const filters = require('./search.filters');
 
 module.exports = function () {
   const app = this;
-  const Model = createModel(app);
   const paginate = app.get('paginate');
 
   const options = {
     name: 'search',
-    Model,
     paginate
   };
 
@@ -22,8 +18,4 @@ module.exports = function () {
   const service = app.service('search');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };
