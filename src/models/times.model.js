@@ -7,7 +7,9 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const times = new Schema({
     date: { type: Date, required: true },
+    // references the _id of a document in the "theaters" collection
     theater: { type: Schema.Types.ObjectId, required: true, ref: 'theaters' },
+    // references the _id of a document in the "movies" collection
     movie: { type: Schema.Types.ObjectId, required: true, ref: 'movies' }
   }, {
     timestamps: true

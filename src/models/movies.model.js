@@ -7,8 +7,11 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const movies = new Schema({
     title: { type: String, required: true },
+    // enum are the list of allowable options
     rating: { type: String, required: true, enum: ['G', 'PG', 'PG-13', 'R'] },
+    // optional
     description: { type: String },
+    // if not provided, set as default to 0
     searches: { type: Number, default: 0 }
   }, {timestamps: true});
 
