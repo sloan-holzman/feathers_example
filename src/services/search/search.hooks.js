@@ -1,4 +1,3 @@
-const { filterByRatings } = require('./hooks');
 const errors = require('@feathersjs/errors');
 
 module.exports = {
@@ -15,7 +14,18 @@ module.exports = {
   },
 
   after: {
-    find: [filterByRatings]
+    find: [
+      // keep track of all the times that each of the movies came up in a search
+      async (context) => {
+        // find all the the movies that came back in the search
+        const ids = context.result.map(showing => showing.movie._id);
+        // then increase the "search" count on each of those movies by 1
+        ids.forEach(async(id) => {
+          await context.app.service('movies').patch(id, {$inc: {searches: 1}});
+        })
+        return context;
+      }
+    ]
   },
 
   error: {
